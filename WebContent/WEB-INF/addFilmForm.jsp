@@ -21,13 +21,13 @@
 		<label for="film_replacement_cost">Film Replacement Cost:</label><input type="text" name="film_replacement_cost"><br />
 		<label for="film_rating">Film Rating:</label><input type="text" name="film_rating"><br />
 		<label for="film_special_features">Film Special Features:</label><input type="text" name="film_special_features"><br />
-		<label for="film_category">Film Category:</label><input type="text" name="film_category"><br />
-		<label for="film_language">Film Language:</label><input type="text" name="film_language"><br />
-		<label for="film_actors">Film Actors:</label>
+		<!-- <label for="film_category">Film Category:</label><input type="text" name="film_category"><br />
+		<lab --><!-- el for="film_language">Film Language:</label><input type="text" name="film_language"><br /> -->
+		<!-- <label for="film_actors">Film Actors:</label>
 		<input type="text" name="film_actors"><br />
 		<input type="text" name="film_actors"><br />
 		<input type="text" name="film_actors"><br />
-		<input type="text" name="film_actors"><br />
+		<input type="text" name="film_actors"><br /> -->
 		<input type="submit" value="Submit">
 	</form>
 </body>

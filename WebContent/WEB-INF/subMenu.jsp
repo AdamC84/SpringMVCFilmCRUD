@@ -40,8 +40,9 @@
 </c:if>
 <h2>Would you like to delete this film?</h2>
 <form action="deleteFilm.do" method="POST">
-		<label for="deleteFilm">Type yes.</label><input type="text" name="yes"><br />
+		<label for="deleteFilm">Yes</label><input type="submit" value="${newFilm }"value="Yes"><br />
 		<input type="submit" value="Submit">
 	</form>
+
 
 </html>

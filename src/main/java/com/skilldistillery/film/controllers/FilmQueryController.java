@@ -33,19 +33,43 @@ public class FilmQueryController {
 		Film film = null;
 		try {
 			film = dm.findFilmById(filmID);
+			dm.deleteFilm(film);
+			actorList = film.getActorList();
+			mv.addObject("actorList", actorList);
+			mv.addObject("newFilm", film);
+			mv.setViewName("WEB-INF/index2.jsp");
+		} catch (NullPointerException e) {
+			mv.addObject("newFilm", film);
+			mv.setViewName("WEB-INF/index.jsp");
 		} catch (SQLException e) {
 
-		} catch (NullPointerException e) {
-			actorList = film.getActorList();
-			mv.addObject("emptyFilm", film);
 		}
-		mv.addObject("actorList", actorList);
-		mv.addObject("filmbyID", film);
-		mv.setViewName("WEB-INF/index2.jsp");
-
+//		mv.setViewName("redirect:subMenu.do");
 		return mv;
-
 	}
+
+	@RequestMapping(path = "deleteFilm.do", method = RequestMethod.POST)
+	public ModelAndView deleteFilm(@RequestParam("yes") String yes, Film newFilm) {
+		ModelAndView mv = new ModelAndView();
+		if (yes.equalsIgnoreCase("yes")) {
+			try {
+				dm.deleteFilm(newFilm);
+				mv.setViewName("WEB-INF/index2.jsp");
+			} catch (SQLException e) {
+				System.out.println("No film located by that ID");
+
+			} catch (NullPointerException e) {
+			}
+		}
+		return mv;
+	}
+
+//	@RequestMapping(path = "subMenu.do", method = RequestMethod.GET)
+//	public ModelAndView created() {
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("WEB-INF/subMenu.jsp");
+//		return mv;
+//	}
 
 	@RequestMapping("addFilm.do")
 	public ModelAndView addFilmForm() {
@@ -55,15 +79,16 @@ public class FilmQueryController {
 	}
 
 	@RequestMapping(path = "createFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilmToDatabase( String film_title, String film_description,
-			String film_release_year, int film_language_id, int film_rental_duration, double film_rental_rate,
-			int film_length, double film_replacement_cost, String film_rating, String film_special_features,
-			String film_language, String film_category, List<Actor> film_actors) {
-		Film newFilm = new Film(0, film_title, film_description, film_release_year, film_language_id,
+	public ModelAndView addFilmToDatabase(String film_title, String film_description, String film_release_year,
+			int film_language_id, int film_rental_duration, double film_rental_rate, int film_length,
+			double film_replacement_cost, String film_rating, String film_special_features) {
+		Film newFilm = new Film(film_title, film_description, film_release_year, film_language_id,
 				film_rental_duration, film_rental_rate, film_length, film_replacement_cost, film_rating,
-				film_special_features, film_language, film_category, film_actors);
+				film_special_features);
 		ModelAndView mv = new ModelAndView();
 		dm.createFilm(newFilm);
+		mv.addObject("newFilm", newFilm);
+		mv.setViewName("WEB-INF/index2.jsp");
 		return mv;
 
 	}

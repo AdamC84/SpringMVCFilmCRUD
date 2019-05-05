@@ -35,21 +35,36 @@ public class DataMethods implements FilmAccessorDAO {
 		String user = "student";
 		String pwd = "student";
 		String sql = "SELECT f.id, f.title, f.description, f.release_year, f.language_id, f.rental_duration, f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features,l.name, c.name FROM film f JOIN film_category fc on fc.film_id = f.id JOIN category c on c.id = fc.category_id JOIN language l ON f.language_id = l.id WHERE f.id = ?";
+		String sql1 = "SELECT * from film where id = ?";
+		if (filmId < 1001) {
 
-		try (Connection conn = DriverManager.getConnection(URL, user, pwd);
-				PreparedStatement pst = conn.prepareStatement(sql);) {
-			pst.setInt(1, filmId);
-			ResultSet rs = pst.executeQuery();
-			if (rs.next()) {
-//				count++;
-				return new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
-						rs.getString("release_year"), rs.getInt("language_id"), rs.getInt("rental_duration"),
-						rs.getDouble("rental_rate"), rs.getInt("length"), rs.getDouble("replacement_cost"),
-						rs.getString("rating"), rs.getString("special_features"), rs.getString("name"),
-						rs.getString(13), (findActorsByFilmId(rs.getInt("id"))));
+			try (Connection conn = DriverManager.getConnection(URL, user, pwd);
+					PreparedStatement pst = conn.prepareStatement(sql);) {
+				pst.setInt(1, filmId);
+				ResultSet rs = pst.executeQuery();
+				if (rs.next()) {
+					return new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
+							rs.getString("release_year"), rs.getInt("language_id"), rs.getInt("rental_duration"),
+							rs.getDouble("rental_rate"), rs.getInt("length"), rs.getDouble("replacement_cost"),
+							rs.getString("rating"), rs.getString("special_features"), rs.getString("name"),
+							rs.getString(13), (findActorsByFilmId(rs.getInt("id"))));
+				}
 			}
-		}
+		} else {
+			try (Connection conn = DriverManager.getConnection(URL, user, pwd);
+					PreparedStatement pst = conn.prepareStatement(sql1);) {
+				pst.setInt(1, filmId);
+				ResultSet rs = pst.executeQuery();
+				if (rs.next()) {
+					return new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
+							rs.getString("release_year"), rs.getInt("language_id"), rs.getInt("rental_duration"),
+							rs.getDouble("rental_rate"), rs.getInt("length"), rs.getDouble("replacement_cost"),
+							rs.getString("rating"), rs.getString("special_features"));
+				}
 
+			}
+
+		}
 		return null;
 	}
 
@@ -121,47 +136,96 @@ public class DataMethods implements FilmAccessorDAO {
 	}
 
 	public Film createFilm(Film film) {
-		String url = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
-		String user = "student";
-		String pword = "student";
-		// Employees at store 4 were in a movie, now they're actors!
-		String sql = "INSERT INTO film (title, language_id,) VALUE (?, 1) ";
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, user, pword);
-			conn.setAutoCommit(false); // Start transaction
-			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			st.setString(1, film.getTitle());
-			int uc = st.executeUpdate();
-			ResultSet keys = st.getGeneratedKeys();
-			while (keys.next()) {
-				if (uc == 1) {
-					int filmId = keys.getInt(1);
-					System.out.println("New film ID for : " + film.getTitle() + " " + filmId);
-					System.out.println(uc + " film records created.");
-					conn.commit();
-					film.setId(filmId);
-				} else {
-					conn.rollback();
-				}
-			}
-
-			conn.commit();
-		} catch (SQLException e) {
-			System.err.println("Error during inserts.");
-			e.printStackTrace();
-			// Need to rollback, which also throws SQLException.
-			if (conn != null) {
-				try {
-					conn.rollback();
-				} catch (SQLException e1) {
-					System.err.println("Error rolling back.");
-					e1.printStackTrace();
-				}
+//		String url = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
+//		String user = "student";
+//		String pword = "student";
+//		Connection conn = null;
+//		try {
+//			conn = DriverManager.getConnection(url, user, pword);
+//			conn.setAutoCommit(false);
+//			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//			int uc = st.executeUpdate();
+//			ResultSet keys = st.getGeneratedKeys();
+//			while (keys.next()) {
+//				if (uc == 1) {
+//					int filmId = keys.getInt(1);
+////					film.setId(filmId);
+//					System.out.println("New film ID for : " + film.getTitle() + " " + filmId);
+//					System.out.println(uc + " film records created.");
+//					conn.commit();
+//					film.setId(filmId);
+//					return film;
+//				} else {
+//					conn.rollback();
+//				}
+//			}
+//
+//			conn.commit();
+//		} catch (SQLException e) {
+//			System.err.println("Error during inserts.");
+//			e.printStackTrace();
+//			if (conn != null) {
+//				try {
+//					conn.rollback();
+//				} catch (SQLException e1) {
+//					System.err.println("Error rolling back.");
+//					e1.printStackTrace();
+//				}
+//			}
+//		}
+//		return null;
+//	}
+	String url = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
+	String user = "student";
+	String pword = "student";
+	String sql = "INSERT INTO film ( title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+	// Employees at store 4 were in a movie, now they're actors!
+//	String sql = "INSERT INTO film (title, language_id) VALUE (?, 1) ";
+	Connection conn = null;
+	try {
+		conn = DriverManager.getConnection(url, user, pword);
+		conn.setAutoCommit(false); // Start transaction
+		PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		st.setString(1, film.getTitle());
+		st.setString(2, film.getDescription());
+		st.setString(3, film.getRelease_year());
+		st.setInt(4, film.getLanguage_id());
+		st.setInt(5, film.getRental_duration());
+		st.setDouble(6, film.getRental_rate());
+		st.setInt(7, film.getLength());
+		st.setDouble(8, film.getReplacemnt_cost());
+		st.setString(9, film.getRating());
+		st.setString(10, film.getSpecial_features());
+		int uc = st.executeUpdate();
+		ResultSet keys = st.getGeneratedKeys();
+		while (keys.next()) {
+			if (uc == 1) {
+				int filmId = keys.getInt(1);
+				System.out.println("New film ID for : " + film.getTitle() + " " + filmId);
+				System.out.println(uc + " film records created.");
+				conn.commit();
+				film.setId(filmId);
+			} else {
+				conn.rollback();
 			}
 		}
-		return null;
+
+		conn.commit();
+	} catch (SQLException e) {
+		System.err.println("Error during inserts.");
+		e.printStackTrace();
+		// Need to rollback, which also throws SQLException.
+		if (conn != null) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.err.println("Error rolling back.");
+				e1.printStackTrace();
+			}
+		}
 	}
+	return null;
+}
 
 	@Override
 	public void deleteFilm(Film film) throws SQLException {

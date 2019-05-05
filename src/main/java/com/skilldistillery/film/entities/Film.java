@@ -50,6 +50,35 @@ public class Film {
 		this.category = category;
 	}
 
+	public Film(String title, String description, String release_year, int language_id, int rental_duration,
+			double rental_rate, int length, double replacemnt_cost, String rating, String special_features) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.release_year = release_year;
+		this.language_id = language_id;
+		this.rental_duration = rental_duration;
+		this.rental_rate = rental_rate;
+		this.length = length;
+		this.replacemnt_cost = replacemnt_cost;
+		this.rating = rating;
+		this.special_features = special_features;
+	}
+	public Film(int id, String title, String description, String release_year, int language_id, int rental_duration,
+			double rental_rate, int length, double replacemnt_cost, String rating, String special_features) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.release_year = release_year;
+		this.language_id = language_id;
+		this.rental_duration = rental_duration;
+		this.rental_rate = rental_rate;
+		this.length = length;
+		this.replacemnt_cost = replacemnt_cost;
+		this.rating = rating;
+		this.special_features = special_features;
+	}
 	public String getCategory() {
 		return category;
 	}
