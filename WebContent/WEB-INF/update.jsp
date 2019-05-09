@@ -7,13 +7,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Error</title>
+<title>Film Query</title>
 </head>
 <body>
-	<h2>Error, your action was not completed.</h2>
+	<h2>Your film was updated.</h2>
+
+
 	<form action="home.do" method="post">
 		<label for="home"></label><input type="submit" value="Home" />
 	</form>
-</body>
 
+</body>
 </html>

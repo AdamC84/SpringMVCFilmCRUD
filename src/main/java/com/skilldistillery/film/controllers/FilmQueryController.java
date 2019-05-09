@@ -17,7 +17,6 @@ import com.skilldistillery.film.DAO.FilmAccessorDAO;
 import com.skilldistillery.film.DAO.FilmAccessorDAOImpl;
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
-import com.skilldistillery.film.service.DataMethods;
 
 @Controller
 public class FilmQueryController {
@@ -78,6 +77,7 @@ public class FilmQueryController {
 		mv.setViewName("WEB-INF/addFilmForm.jsp");
 		return mv;
 	}
+
 	@RequestMapping("editFilm.do")
 	public ModelAndView editFilmForm(String value) throws SQLException {
 		ModelAndView mv = new ModelAndView();
@@ -88,18 +88,34 @@ public class FilmQueryController {
 		return mv;
 	}
 
-@RequestMapping("update.do")
-public ModelAndView updateFilmForm(@ModelAttribute("film")Film film) throws SQLException {
-	ModelAndView mv = new ModelAndView();
-	int id = Integer.parseInt(value);
-	Film film = dm.findFilmById(id);
-	mv.addObject("film", film);
-	mv.setViewName("WEB-INF/Edit.jsp");
-	return mv;
-}
+	@RequestMapping("update.do")
+	public ModelAndView updateFilmForm(@ModelAttribute("film") Film film) throws SQLException {
+		ModelAndView mv = new ModelAndView();
+		try {
+			dm.updateFilm(film);
+			mv.setViewName("WEB-INF/update.jsp");
+		} catch (Exception e) {
+			mv.setViewName("WEB-INF/error.jsp");
+		}
+
+		return mv;
+	}
+	@RequestMapping("keyword.do")
+	public ModelAndView searchByKeyword(@ModelAttribute("keyword") String keyword) throws SQLException {
+		ModelAndView mv = new ModelAndView();
+		try {
+			List<Film> film = dm.findFilmByKeyword(keyword);
+			mv.addObject("results", film);
+			mv.setViewName("WEB-INF/keyword.jsp");
+		} catch (Exception e) {
+			mv.setViewName("WEB-INF/error.jsp");
+		}
+		
+		return mv;
+	}
 
 	@RequestMapping(path = "createFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilmToDatabase(String film_title, String film_description, String film_release_year,
+	public ModelAndView addFilmToDatabase(String film_title, String film_description, int film_release_year,
 			int film_language_id, int film_rental_duration, double film_rental_rate, int film_length,
 			double film_replacement_cost, String film_rating, String film_special_features) throws SQLException {
 		Film newFilm = new Film(film_title, film_description, film_release_year, film_language_id, film_rental_duration,

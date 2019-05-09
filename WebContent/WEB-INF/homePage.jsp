@@ -15,9 +15,12 @@
 		<label for="filmID">Film ID:</label><input type="text" name="filmID"><br />
 		<input type="submit" value="Submit">
 	</form>
-	<%-- <c:if test="${empty newFilm }">
-		<h2>Your query returned no results.</h2>
-	</c:if> --%>
+	<h2>Search by Keyword</h2>
+	<form action="keyword.do" method="POST">
+		<label for="keyword">Keyword:</label><input type="text" name="keyword"><br />
+		<input type="submit" value="Submit">
+	</form>
+	
 	<br>
 	<h2>Would you like to add a film to the database?</h2>
 	<form action="addFilm.do" method="POST">

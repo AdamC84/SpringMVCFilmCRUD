@@ -7,7 +7,7 @@ public class Film {
 	private int id;
 	private String title;
 	private String description;
-	private String release_year;
+	private int release_year;
 	private int language_id;
 	private int rental_duration;
 	private double rental_rate;
@@ -31,7 +31,7 @@ public class Film {
 		this.id = id;
 	}
 
-	public Film(int id, String title, String description, String release_year, int language_id, int rental_duration,
+	public Film(int id, String title, String description, int release_year, int language_id, int rental_duration,
 			double rental_rate, int length, double replacement_cost, String rating, String special_features, String language, String category, List<Actor> actorList) {
 		super();
 		this.id = id;
@@ -50,7 +50,7 @@ public class Film {
 		this.category = category;
 	}
 
-	public Film(String title, String description, String release_year, int language_id, int rental_duration,
+	public Film(String title, String description, int release_year, int language_id, int rental_duration,
 			double rental_rate, int length, double replacement_cost, String rating, String special_features) {
 		super();
 		this.title = title;
@@ -64,7 +64,7 @@ public class Film {
 		this.rating = rating;
 		this.special_features = special_features;
 	}
-	public Film(int id, String title, String description, String release_year, int language_id, int rental_duration,
+	public Film(int id, String title, String description, int release_year, int language_id, int rental_duration,
 			double rental_rate, int length, double replacement_cost, String rating, String special_features) {
 		super();
 		this.id = id;
@@ -117,11 +117,11 @@ public class Film {
 		this.description = description;
 	}
 
-	public String getRelease_year() {
+	public int getRelease_year() {
 		return release_year;
 	}
 
-	public void setRelease_year(String release_year) {
+	public void setRelease_year(int release_year) {
 		this.release_year = release_year;
 	}
 
@@ -200,12 +200,15 @@ public class Film {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((actorList == null) ? 0 : actorList.hashCode());
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + language_id;
 		result = prime * result + length;
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
-		result = prime * result + ((release_year == null) ? 0 : release_year.hashCode());
+		result = prime * result + release_year;
 		result = prime * result + rental_duration;
 		long temp;
 		temp = Double.doubleToLongBits(rental_rate);
@@ -226,12 +229,27 @@ public class Film {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
+		if (actorList == null) {
+			if (other.actorList != null)
+				return false;
+		} else if (!actorList.equals(other.actorList))
+			return false;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
+			return false;
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		} else if (!language.equals(other.language))
 			return false;
 		if (language_id != other.language_id)
 			return false;
@@ -242,10 +260,7 @@ public class Film {
 				return false;
 		} else if (!rating.equals(other.rating))
 			return false;
-		if (release_year == null) {
-			if (other.release_year != null)
-				return false;
-		} else if (!release_year.equals(other.release_year))
+		if (release_year != other.release_year)
 			return false;
 		if (rental_duration != other.rental_duration)
 			return false;
