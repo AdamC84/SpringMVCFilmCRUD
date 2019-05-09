@@ -12,7 +12,7 @@ public class Film {
 	private int rental_duration;
 	private double rental_rate;
 	private int length;
-	private double replacemnt_cost;
+	private double replacement_cost;
 	private String rating;
 	private String special_features;
 	private String language;
@@ -32,7 +32,7 @@ public class Film {
 	}
 
 	public Film(int id, String title, String description, String release_year, int language_id, int rental_duration,
-			double rental_rate, int length, double replacemnt_cost, String rating, String special_features, String language, String category, List<Actor> actorList) {
+			double rental_rate, int length, double replacement_cost, String rating, String special_features, String language, String category, List<Actor> actorList) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -42,7 +42,7 @@ public class Film {
 		this.rental_duration = rental_duration;
 		this.rental_rate = rental_rate;
 		this.length = length;
-		this.replacemnt_cost = replacemnt_cost;
+		this.replacement_cost = replacement_cost;
 		this.rating = rating;
 		this.special_features = special_features;
 		this.language = language;
@@ -51,7 +51,7 @@ public class Film {
 	}
 
 	public Film(String title, String description, String release_year, int language_id, int rental_duration,
-			double rental_rate, int length, double replacemnt_cost, String rating, String special_features) {
+			double rental_rate, int length, double replacement_cost, String rating, String special_features) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -60,12 +60,12 @@ public class Film {
 		this.rental_duration = rental_duration;
 		this.rental_rate = rental_rate;
 		this.length = length;
-		this.replacemnt_cost = replacemnt_cost;
+		this.replacement_cost = replacement_cost;
 		this.rating = rating;
 		this.special_features = special_features;
 	}
 	public Film(int id, String title, String description, String release_year, int language_id, int rental_duration,
-			double rental_rate, int length, double replacemnt_cost, String rating, String special_features) {
+			double rental_rate, int length, double replacement_cost, String rating, String special_features) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -75,7 +75,7 @@ public class Film {
 		this.rental_duration = rental_duration;
 		this.rental_rate = rental_rate;
 		this.length = length;
-		this.replacemnt_cost = replacemnt_cost;
+		this.replacement_cost = replacement_cost;
 		this.rating = rating;
 		this.special_features = special_features;
 	}
@@ -157,12 +157,12 @@ public class Film {
 		this.length = length;
 	}
 
-	public double getReplacemnt_cost() {
-		return replacemnt_cost;
+	public double getReplacement_cost() {
+		return replacement_cost;
 	}
 
-	public void setReplacemnt_cost(double replacemnt_cost) {
-		this.replacemnt_cost = replacemnt_cost;
+	public void setReplacement_cost(double replacement_cost) {
+		this.replacement_cost = replacement_cost;
 	}
 
 	public String getRating() {
@@ -192,7 +192,7 @@ public class Film {
 	public String toString() {
 		return "Film id: " + id + ", title: " + title + ", description: " + description + ", release_year: " + release_year
 				+ ", language_id: " + language_id + ", rental_duration: " + rental_duration + ", rental_rate: "
-				+ rental_rate + ", length: " + length + ", replacemnt_cost: " + replacemnt_cost + ", rating: " + rating
+				+ rental_rate + ", length: " + length + ", replacement_cost: " + replacement_cost + ", rating: " + rating
 				+ ", special_features: " + special_features + "Language: " + language + "List of actors: " + actorList ;
 	}
 
@@ -210,7 +210,7 @@ public class Film {
 		long temp;
 		temp = Double.doubleToLongBits(rental_rate);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(replacemnt_cost);
+		temp = Double.doubleToLongBits(replacement_cost);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((special_features == null) ? 0 : special_features.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
@@ -251,7 +251,7 @@ public class Film {
 			return false;
 		if (Double.doubleToLongBits(rental_rate) != Double.doubleToLongBits(other.rental_rate))
 			return false;
-		if (Double.doubleToLongBits(replacemnt_cost) != Double.doubleToLongBits(other.replacemnt_cost))
+		if (Double.doubleToLongBits(replacement_cost) != Double.doubleToLongBits(other.replacement_cost))
 			return false;
 		if (special_features == null) {
 			if (other.special_features != null)

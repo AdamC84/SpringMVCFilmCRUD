@@ -15,9 +15,9 @@
 		<label for="filmID">Film ID:</label><input type="text" name="filmID"><br />
 		<input type="submit" value="Submit">
 	</form>
-	<c:if test="${empty newFilm }">
+	<%-- <c:if test="${empty newFilm }">
 		<h2>Your query returned no results.</h2>
-	</c:if>
+	</c:if> --%>
 	<br>
 	<h2>Would you like to add a film to the database?</h2>
 	<form action="addFilm.do" method="POST">
