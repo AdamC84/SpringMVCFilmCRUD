@@ -41,7 +41,6 @@
 
 		</ul>
 	</c:forEach>
-	<h2>Would you like to delete this film?</h2>
 	<form action="home.do" method="post">
 		<label for="home"></label><input type="submit" value="Home" />
 	</form>
